@@ -4,7 +4,7 @@
 ## Docs
 
 - https://banming.github.io/GameEngine/Unreal/manual/UECrowds.html
-- https://banming.github.io/GameEngine/Unreal/manual/UEVAT.html
+- https://banming.github.io/GameEngine/Unreal/animation/UEVAT.html
 
 ## Capture
 
