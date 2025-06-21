@@ -10,13 +10,13 @@
 #include "MassRepresentationSubsystem.h"
 #include "MassSimulationLOD.h"
 
-UVertexAnimProcessor::UVertexAnimProcessor()
+UVertexAnimProcessor::UVertexAnimProcessor() : EntityQuery(*this)
 {
 	ExecutionFlags = (int32) EProcessorExecutionFlags::All;
 	ExecutionOrder.ExecuteAfter.Add(UE::Mass::ProcessorGroupNames::Representation);
 }
 
-void UVertexAnimProcessor::ConfigureQueries()
+void UVertexAnimProcessor::ConfigureQueries(const TSharedRef<FMassEntityManager>& EntityManager)
 {
 	EntityQuery.AddRequirement<FMassVelocityFragment>(EMassFragmentAccess::ReadOnly);
 	EntityQuery.AddRequirement<FMassRepresentationFragment>(EMassFragmentAccess::ReadOnly);
@@ -31,7 +31,7 @@ void UVertexAnimProcessor::ConfigureQueries()
 
 void UVertexAnimProcessor::Execute(FMassEntityManager& EntityManager, FMassExecutionContext& Context)
 {
-	EntityQuery.ForEachEntityChunk(EntityManager, Context,
+	EntityQuery.ForEachEntityChunk(Context,
 		[this](FMassExecutionContext& Context)
 		{
 			TRACE_CPUPROFILER_EVENT_SCOPE(UpdateVertexAnim)
